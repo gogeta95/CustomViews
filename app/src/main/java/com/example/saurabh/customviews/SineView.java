@@ -10,7 +10,9 @@ import android.graphics.Path;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 /**
  * Created by saurabh on 20/11/16.
@@ -87,6 +89,13 @@ public class SineView extends View {
         calculatePath2();
         canvas.drawPath(path,mLinePaint);
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Toast.makeText(getContext(), ""+event.getY(), Toast.LENGTH_SHORT).show();
+        return super.onTouchEvent(event);
+    }
+
     private void calculatePath() {
         path.reset();
         float ix=0;
@@ -123,8 +132,7 @@ public class SineView extends View {
 
     public void setPitch(float pitch) {
         this.mPitch = pitch;
-        if (mPitch==0)
-            throw new IllegalArgumentException("Pitch cannot be zero!");
+        mPitch= mPitch==0? (float) 0.1 :mPitch;
         step= (int) (50*mPitch);
         invalidate();
         requestLayout();
@@ -141,6 +149,7 @@ public class SineView extends View {
 
     public void setWaveWidth(int WaveWidth) {
         this.mWaveWidth = WaveWidth;
+        mLinePaint.setStrokeWidth(mWaveWidth);
         invalidate();
     }
 
