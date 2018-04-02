@@ -5,28 +5,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.SeekBar;
 
 public class MainActivity extends AppCompatActivity {
-    SeekBar seekBarPitch;
+    SeekBar seekBarSpeed;
     SeekBar seekBarSize;
-    SineView sineView;
+    Polygons polygons;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sineView = (SineView) findViewById(R.id.sineView);
-        seekBarPitch = (SeekBar) findViewById(R.id.seekbar_pitch);
-        seekBarSize = (SeekBar) findViewById(R.id.seekbar_size);
+        polygons = findViewById(R.id.polygons);
+        seekBarSpeed = findViewById(R.id.seekbar_speed);
+        seekBarSize = findViewById(R.id.seekbar_size);
         SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (b) {
                     switch (seekBar.getId()) {
-                        case R.id.seekbar_pitch:
-                            sineView.setPitch((float) (i * 0.5));
+                        case R.id.seekbar_speed:
+                            polygons.setSpeed(i);
                             break;
                         case R.id.seekbar_size:
-                            sineView.setWaveWidth(i);
+                            polygons.setWidth(i);
                             break;
                     }
                 }
@@ -43,6 +43,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         seekBarSize.setOnSeekBarChangeListener(onSeekBarChangeListener);
-        seekBarPitch.setOnSeekBarChangeListener(onSeekBarChangeListener);
+        seekBarSpeed.setOnSeekBarChangeListener(onSeekBarChangeListener);
     }
 }
